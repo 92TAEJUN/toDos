@@ -10,19 +10,19 @@ function saveUser(text) {
   localStorage.setItem(USER_LS, text);
 }
 
-function userHandle(event) {
+function greetingHandle(event) {
   event.preventDefault();
   const inputUser = user_input.value;
   saveUser(inputUser);
   printUser(inputUser);
 }
 
-function greeting() {
+function askName() {
   user_input.classList.add(SHOW);
   user_input.classList.remove(HIDE);
   user_view.classList.remove(SHOW);
   user_view.classList.add(HIDE);
-  user_container.addEventListener("submit", userHandle);
+  user_container.addEventListener("submit", greetingHandle);
 }
 
 function printUser(text) {
@@ -36,7 +36,7 @@ function printUser(text) {
 function loadUser() {
   const currentUser = localStorage.getItem(USER_LS);
   if (currentUser === null) {
-    greeting();
+    askName();
   } else {
     printUser(currentUser);
   }
