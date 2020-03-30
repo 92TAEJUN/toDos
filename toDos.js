@@ -5,8 +5,20 @@ const todo_list = document.querySelector(".js-toDos");
 const TODOS_LS = "todos";
 let TODOS = [];
 
+function delToDo(event) {
+  const btn = event.target;
+  const li = btn.parentNode;
+  todo_list.removeChild(li);
+  const currentId = li.id;
+  const tempObj = TODOS.filter(function(toDo) {
+    return toDo.id !== currentId;
+  });
+  TODOS = tempObj;
+  saveToDos(TODOS);
+}
+
 function saveToDos(obj) {
-  localStorage.setItem(TODOS_LS, JSON.stringify(TODOS));
+  localStorage.setItem(TODOS_LS, JSON.stringify(obj));
 }
 
 function toDoHandle(event) {
@@ -20,8 +32,10 @@ function printToDos(text) {
   const li = document.createElement("li");
   const span = document.createElement("span");
   const delbtn = document.createElement("button");
+  delbtn.addEventListener("click", delToDo);
+  const newId = Date.now() + (Math.random() * 100000).toFixed();
+
   span.innerText = text;
-  const newId = TODOS.length + 1;
   delbtn.innerHTML = "❌";
   li.appendChild(span);
   li.appendChild(delbtn);
